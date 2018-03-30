@@ -1,0 +1,10 @@
+.boundary {
+  fill: #ddd;
+  stroke: #888;
+  stroke-linejoin: round;
+}
+svg {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+}
