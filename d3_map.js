@@ -5,6 +5,17 @@ var height = 600,
     projection = d3.geoMercator(),
     mexico = void 0;
 
+    var geoID = function(d) {
+      return "c" + d.properties.ID_1;
+    };
+
+    var click = function(d){
+      d3.selectAll('path').attr('fill-opacity',0.2)
+      d3.select('#' + geoID(d)).attr('fill-opacity', 1);
+    };
+
+  
+
 var path = d3.geoPath().projection(projection);
 var svg = d3.select('#map')
   .append('svg')
@@ -26,10 +37,13 @@ d3.json('geo-data.json').then(function(data){
 
   mexico = map.selectAll('path').data(states.features);
   var color = d3.scaleLinear().domain([0,33]).range(['red', 'yellow']);
+
   // enter
   mexico.enter()
     .append('path')
     .attr('d', path)
+    .attr('id', geoID)
+    .on("click", click)
     .attr('fill', function(d,i){
       return color(i);
     });
