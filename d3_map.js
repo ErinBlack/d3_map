@@ -25,10 +25,14 @@ d3.json('geo-data.json').then(function(data){
   var map = svg.append('g').attr('class', 'boundry');
 
   mexico = map.selectAll('path').data(states.features);
+  var color = d3.scaleLinear().domain([0,33]).range(['red', 'yellow']);
   // enter
   mexico.enter()
     .append('path')
-    .attr('d', path);
+    .attr('d', path)
+    .attr('fill', function(d,i){
+      return color(i);
+    });
 
 });
 
