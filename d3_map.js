@@ -14,7 +14,7 @@ var height = 600,
       d3.select('#' + geoID(d)).attr('fill-opacity', 1);
     };
 
-  
+
 
 var path = d3.geoPath().projection(projection);
 var svg = d3.select('#map')
@@ -28,7 +28,7 @@ d3.json('geo-data.json').then(function(data){
   // set up scale and translate
   var b, s, t;
   projection.scale(1).translate([0, 0]);
-  var b = path.bounds(states);
+  var b = path.bounds(states.features[5]);
   var s = .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
   var t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
   projection.scale(s).translate(t);
