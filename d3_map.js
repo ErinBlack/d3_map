@@ -45,7 +45,29 @@ d3.json('geo-data.json').then(function(data){
     .attr('fill', function(d,i){
       return color(i);
     });
+  mexico.exit().remove();
 
+  d3.csv('cities.csv', function(cities) {
+    var cityPoints = svg.selectAll('circle').data(cities);
+    var cityText = svg.selectAll('text').data(cities);
+    var radius = d3.scaleLinear().domain([0,100]).range([5,30]);
+
+    cityPoints.enter()
+        .append('circle')
+        .attr('cx', function(d) {return projection([d.lon, d.lat])[0]; })
+        .attr('cy', function(d) {return projection([d.lon, d.lat])[1]; })
+        .attr('r', function(d) {return radius(d.tequila); })
+        .attr('fill', 'steelblue');
+
+    cityText.enter()
+        .append('text')
+        .attr('x', function(d) {return projection([d.lon, d.lat])[0]})
+        .attr('y', function(d) {return projection([d.lon, d.lat])[1]})
+        .attr('dx', 5)
+        .attr('dy', 3)
+        .text(function(d) {return d.name});
+
+  });
   setInterval(function(){
     map.selectAll('path').transition().duration(500)
       .attr('fill', function(d){
